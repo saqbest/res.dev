@@ -4,7 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use mihaildev\ckeditor\CKEditor;
 use kartik\select2\Select2;
+use kartik\file\FileInput;
+use yii\helpers\Url;
 
+$model2 = new \common\models\Photos();
 /* @var $this yii\web\View */
 /* @var $model common\models\Places */
 /* @var $form yii\widgets\ActiveForm */
@@ -63,10 +66,36 @@ use kartik\select2\Select2;
 
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
+
+    <?= FileInput::widget([
+        'name' => 'Photos[imageFiles]',
+        'attribute' => 'Photos[imageFiles]',
+        'language' => 'ru',
+        'options' => ['multiple' => true],
+        'pluginOptions' => ['previewFileType' => 'any',
+//            'showRemove'=>false,
+//            'showUpload'=>false,
+//            'showUploadedThumbs'=>false,
+//            'initialPreviewShowDelete'=>false,
+            'uploadUrl' => Url::to(['/place/upload']),]
+    ]); ?>
+    <!--    --><?php //ActiveForm::begin([
+    //        'method' => 'post',
+    //        'action' => ['/place/upload'],
+    //        'options'=>['enctype'=>'multipart/form-data']
+    //    ]); ?>
+    <!---->
+    <!--    --><? //= FileInput::widget([
+    //        'model' => $model2,
+    //        'attribute' => 'imageFiles',
+    //        'options' => ['multiple' => true]
+    //    ]);?>
+    <!--    --><?php //ActiveForm::end(); ?>
 
 </div>

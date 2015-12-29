@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Photos;
 use common\models\PvtPlacesKitchens;
 use Yii;
 use common\models\Places;
@@ -9,6 +10,7 @@ use common\models\PlacesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * PlaceController implements the CRUD actions for Places model.
@@ -121,6 +123,31 @@ public function actionTest(){
 $a=$model->getPvtPlacesKitchens()->where(['place_id'=>3])->all();
     print_r($a);
 }
+
+    public function actionUpload()
+    {
+        $model = new Photos();
+        //$model2 = new Page();
+        if (Yii::$app->request->isPost) {
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+//       print_r($model->imageFiles);
+//            print_r($model->upload());
+//            foreach ($model->imageFiles as $file) {
+//                $file->saveAs('uploads/' . $file->baseName .date('Yhis') .'.' . $file->extension);
+
+            //      }
+            if ($model->upload()) {
+                //file is uploaded successfully
+                echo 111;
+
+
+            }
+        }
+//        $pic = $model2->find()->where(['user_id' => Yii::$app->user->identity->id])->all();
+//        return $this->render('upload', ['model' => $model,
+//            'pic' => $pic
+//        ]);
+    }
     /**
      * Finds the Places model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

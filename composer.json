@@ -21,7 +21,8 @@
         "2amigos/yii2-transliterator-helper": "*",
         "dmstr/yii2-adminlte-asset": "2.*",
         "mihaildev/yii2-ckeditor": "*",
-        "kartik-v/yii2-widget-select2": "@dev"
+        "kartik-v/yii2-widget-select2": "@dev",
+        "kartik-v/yii2-widget-fileinput": "@dev"
 
     },
     "require-dev": {
