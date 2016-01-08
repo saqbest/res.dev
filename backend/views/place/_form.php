@@ -4,22 +4,15 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use mihaildev\ckeditor\CKEditor;
 use kartik\select2\Select2;
-use kartik\file\FileInput;
-use yii\helpers\Url;
 
-$model2 = new \common\models\Photos();
 /* @var $this yii\web\View */
 /* @var $model common\models\Places */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-    <style>
-        .kv-file-remove.btn.btn-xs.btn-default {
-            display: none;
-        }
-    </style>
+
 <div class="places-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'category_id')->widget(Select2::classname(), [
@@ -69,12 +62,10 @@ $model2 = new \common\models\Photos();
     <?= $form->field($model, 'price_to')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
-    <!--    --><? //= $form->field($model, 'imageFiles[]')->widget(FileInput::classname(), [
-    //        'options'=>[
-    //            'multiple'=>true
-    //        ],
-    //
-    //    ]);?>
+    <div class="hide">
+        <?= $form->field($model, 'user_id')->hiddenInput(['value' => $user_id]) ?>
+    </div>
+
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -82,57 +73,5 @@ $model2 = new \common\models\Photos();
 
     <?php ActiveForm::end(); ?>
 
-    <?= FileInput::widget([
-        'name' => 'Places[imageFiles]',
-        'attribute' => 'Places[imageFiles]',
-        // 'language' => 'ru',
-        'options' => ['multiple' => true,
-            'id' => '111',
-
-        ],
-        'pluginOptions' => [
-            // 'showPreview' => false,
-            // 'showUploadedThumbs' => false,
-//            'showRemove' => false,
-//            'showUpload' => false,
-            'uploadUrl' => Url::to(['/place/upload']),
-            'uploadExtraData' => [
-                'place_id' => $model->id,
-
-            ],
-        ],
-        'pluginEvents' => [
-            'filepredelete' => "function(event, key) {
-return (!confirm('Are you sure you want to delete ?'));
-}",
-            'filedeleted' => 'function(event, key) { alert(111); }',
-        ]
-    ]); ?>
-
-    <!--    --><?php //ActiveForm::begin([
-    //        'method' => 'post',
-    //        'action' => ['/place/upload'],
-    //        'options'=>['enctype'=>'multipart/form-data']
-    //    ]); ?>
-    <!---->
-    <!--    --><? //= FileInput::widget([
-    //        'model' => $model2,
-    //        'attribute' => 'imageFiles',
-    //        'options' => ['multiple' => true]
-    //    ]);?>
-    <!--    --><?php //ActiveForm::end(); ?>
 
 </div>
-<?php
-$script = <<< JS
-
-$(document).ready(function(){
-$('.kv-file-remove').on('click', function(event, key) {
-    console.log(' jhoshdfhsdh ');
-});
-
-})
-
-JS;
-$this->registerJs($script);
-?>

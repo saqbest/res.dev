@@ -19,8 +19,12 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'css/jquery-confirm.min.css',
+
     ];
     public $js = [
+        'js/jquery-confirm.min.js',
+
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -64,15 +64,17 @@ class PlaceController extends Controller
     public function actionCreate()
     {
         $model = new Places();
+        $user_id = Yii::$app->user->identity->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Your information saved.');
+            return $this->render('upload');
 
-            return $this->redirect(['index']);
-
-            echo Yii::$app->session->getFlash('success');        } else {
+            echo Yii::$app->session->getFlash('success');
+        } else {
             return $this->render('create', [
                 'model' => $model,
+                'user_id' => $user_id,
             ]);
         }
     }
@@ -89,10 +91,9 @@ class PlaceController extends Controller
         $model->kitchensIds = $model->getKitchensIds(); //could it be automatically??
         $model->servicesIds = $model->getServicesIds(); //could it be automatically??
         $model->metrosIds = $model->getMetrosIds(); //could it be automatically??
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Your information updated.');
-           return $this->redirect(['index']);
+            return $this->render('upload');
             echo Yii::$app->session->getFlash('success');        }
         else {
             return $this->render('update', [
@@ -119,18 +120,18 @@ class PlaceController extends Controller
 //        }
     }
 public function actionTest(){
-    $model=new Places();
+    //  $model=new Places();
 //$a=$model->getPvtPlacesKitchens()->where(['place_id'=>3])->all();
 //    print_r($a);
-    $model->test();
+    //$model->test();
     // $s=Yii::getAlias('@savepic');
     // mkdir($s.'/545', 0777);
-
+    print_r(Yii::$app->user->identity->id);
 }
 
     public function actionUpload()
     {
-        $model = new Places();
+        $model = new Photos();
         //$model2 = new Page();
         if (Yii::$app->request->isPost) {
             $data = Yii::$app->request->post();
