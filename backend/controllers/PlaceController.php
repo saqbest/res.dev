@@ -120,15 +120,22 @@ class PlaceController extends Controller
     }
 public function actionTest(){
     $model=new Places();
-$a=$model->getPvtPlacesKitchens()->where(['place_id'=>3])->all();
-    print_r($a);
+//$a=$model->getPvtPlacesKitchens()->where(['place_id'=>3])->all();
+//    print_r($a);
+    $model->test();
+    // $s=Yii::getAlias('@savepic');
+    // mkdir($s.'/545', 0777);
+
 }
 
     public function actionUpload()
     {
-        $model = new Photos();
+        $model = new Places();
         //$model2 = new Page();
         if (Yii::$app->request->isPost) {
+            $data = Yii::$app->request->post();
+            $place_id = $data['place_id'];
+            print_r($_POST['place_id']);
             $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
 //       print_r($model->imageFiles);
 //            print_r($model->upload());
@@ -136,7 +143,7 @@ $a=$model->getPvtPlacesKitchens()->where(['place_id'=>3])->all();
 //                $file->saveAs('uploads/' . $file->baseName .date('Yhis') .'.' . $file->extension);
 
             //      }
-            if ($model->upload()) {
+            if ($model->upload($place_id)) {
                 //file is uploaded successfully
                 echo 111;
 

@@ -688,7 +688,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/f8475c5b895726e082a1614993c1aff64f77e367",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/8dc8e4695c9184d77fd05189f365249f32c4c63a",
                 "reference": "f8475c5b895726e082a1614993c1aff64f77e367",
                 "shasum": ""
             },

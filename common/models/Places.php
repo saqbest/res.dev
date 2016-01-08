@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "mr_places".
@@ -46,13 +47,14 @@ class Places extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description', 'category_id', 'user_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'price_from', 'price_to', 'slug'], 'required'],
-            [['description'], 'string'],
-            [['category_id', 'user_id', 'status', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['price_from', 'price_to'], 'number'],
-            [['name', 'slug'], 'string', 'max' => 254],
-            [['kitchensIds', 'servicesIds', 'metrosIds'], 'safe'],
+            [['imageFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 4, 'maxSize' => 1024 * 1024 * 2],
+//            [['name', 'description', 'category_id', 'user_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'price_from', 'price_to', 'slug'], 'required'],
+//            [['description'], 'string'],
+//            [['category_id', 'user_id', 'status', 'created_by', 'updated_by'], 'integer'],
+//            [['created_at', 'updated_at'], 'safe'],
+//            [['price_from', 'price_to'], 'number'],
+//            [['name', 'slug'], 'string', 'max' => 254],
+//            [['kitchensIds', 'servicesIds', 'metrosIds'], 'safe'],
 
         ];
     }
@@ -154,7 +156,46 @@ class Places extends \yii\db\ActiveRecord
         );
         return $this->kitchensIds;
     }
-////////////////
+///////image/////////
+    /**
+     * @var UploadedFile[]
+     */
+    public $imageFiles;
+
+    public function test()
+    {
+        $s = Yii::getAlias('@savepic');
+
+        mkdir($s . '/888', 0777);
+
+    }
+
+    public function upload($place_id)
+    {
+        if ($this->validate()) {
+            $s = Yii::getAlias('@savepic');
+            if (!is_dir($s . '/' . $place_id)) {
+                mkdir($s . '/' . $place_id . '', 0777);
+                $loc = $s . '/' . $place_id;
+
+            } else {
+                $loc = $s . '/' . $place_id;
+
+            }
+            foreach ($this->imageFiles as $file) {
+                $file->saveAs($loc . '/' . $file->baseName . date('Y-h-i-s') . '.' . $file->extension);
+            }
+//            $model2 = new Page();
+//            $model2->pic_name = 'uploads/' . $file->baseName .date('Yhis') .'.' . $file->extension;
+//            $model2->user_id=Yii::$app->user->identity->id;
+//            $model2->up_date=date('Y-m-d');
+//            $model2->status=0;
+//            $model2->insert();
+            return true;
+        } else {
+            return false;
+        }
+    }
 /////services////////
     public $servicesIds = [];
 
